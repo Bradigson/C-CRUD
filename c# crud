@@ -1,0 +1,115 @@
+//Delete 
+namespace Class1.Modules
+{
+    class CervezasDB
+    {
+        private string connectionString = "Data Source=LAPTOP-8NN9M6EH; Initial Catalog=Class1; User=sa; Password=123456;";
+
+    
+
+
+        public void Delete(int Id)
+        {
+            string query = "delete from cerveza where id=@id";
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand(query, connection);
+               
+                command.Parameters.AddWithValue("@id", Id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+    }
+}
+CervezasDB cervezaDB = new CervezasDB();
+            cervezaDB.Delete(5);
+            
+            
+            
+            
+            
+            
+//Edit
+namespace Class1.Modules
+{
+    class CervezasDB
+    {
+        private string connectionString = "Data Source=LAPTOP-8NN9M6EH; Initial Catalog=Class1; User=sa; Password=123456;";
+
+        public void Edit(Cervezas cerveza, int Id)
+        {
+            string query = "update cerveza set nombre=@nombre, marca=@marca, alcohol=@alcohol, cantidad=@cantidad where id=@id";
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@nombre", cerveza.Nombre);
+                command.Parameters.AddWithValue("@marca", cerveza.Marca);
+                command.Parameters.AddWithValue("@alcohol", cerveza.Alcohol);
+                command.Parameters.AddWithValue("@cantidad", cerveza.Cantidad);
+                command.Parameters.AddWithValue("@id", Id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+    }
+}
+
+static void Main(string[] args)
+        {
+            CervezasDB cervezaDB = new CervezasDB();
+            Cervezas cerveza = new Cervezas("corona", "precidente", 13, 13);
+            cervezaDB.Edit(cerveza, 6);
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//Add
+namespace Class1.Modules
+{
+    class CervezasDB
+    {
+        private string connectionString = "Data Source=LAPTOP-8NN9M6EH; Initial Catalog=Class1; User=sa; Password=123456;";
+
+       public void Add(Cervezas cerveza)
+
+        {
+            string query = "insert into cervezA(id,nombre, marca, alcohol, cantidad) " +
+                "values(@id, @nombre, @marca, @alcohol, @cantidad)";
+
+            using(var connection = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", 6);
+                command.Parameters.AddWithValue("@nombre", cerveza.Nombre);
+                command.Parameters.AddWithValue("@marca", cerveza.Marca);
+                command.Parameters.AddWithValue("@alcohol", cerveza.Alcohol);
+                command.Parameters.AddWithValue("@cantidad", cerveza.Cantidad);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+    }
+}
+
+
+ static void Main(string[] args)
+        {
+            CervezasDB cervezaDB = new CervezasDB();
+            Cervezas cerveza = new Cervezas("corona", "precidente", 13, 13);
+            cervezaDB.Add(cerveza);
+            
+        }
